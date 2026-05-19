@@ -18,8 +18,6 @@ namespace tpfinal
             return result;
         }
 
-
-
         public List<Dato> BuscarConOrden(List<string> datos, int cantidad,List<Dato>collected)
         {
 			
