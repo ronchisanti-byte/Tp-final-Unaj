@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace tpfinal
 {
-
 	[Serializable]
 	public class Dato
 	{
