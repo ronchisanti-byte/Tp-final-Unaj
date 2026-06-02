@@ -14,8 +14,26 @@ namespace tpfinal
 	{
         public String Consulta1(List<string> datos)
         {
-            string result = "Implementar";
+			Stopwatch sw = Stopwatch.StartNew();
+            List<Dato> c1 =new List<Dato>();
+            List<Dato> c2= new List<Dato>();
+
+			sw.Start();
+			BuscarConHeap(datos, 5, c1);
+			sw.Stop();
+
+			long time = sw.ElapsedTicks;
+			sw.Restart();
+
+			BuscarConOrden(datos, 5, c2);
+			sw.Stop();
+
+			long time2 = sw.ElapsedTicks;
+			string result = $"Buscar con heap: {time} ticks, Buscar con orden: {time2} ticks";
+
+			           
             return result;
+
         }
 
         public List<Dato> BuscarConOrden(List<string> datos, int cantidad,List<Dato>collected)
@@ -159,40 +177,47 @@ namespace tpfinal
 
         public void BuscarConHeap(List<string> datos, int cantidad, List<Dato> collected)
         {
-			for (int i = 0; i < datos.Count; i++)
+			int c = 0;
+			while (c<cantidad)
 			{
-				string palActual = datos[i];
-				bool existePal = false;
+                for (int i = 0; i < datos.Count; i++)
+                {
+                    string palActual = datos[i];
+                    bool existePal = false;
 
-				for (int j = 0; j < collected.Count; j++)
-				{
-					if (collected[j].texto==palActual)
-					{
-						existePal = true;
-						break;
-					}
-					if(existePal==false)
-					{
-						int cuantasHay=Repetidas(datos,palActual);
-						Dato nuevaTarjeta=new Dato(cuantasHay, palActual);
-						collected.Add(nuevaTarjeta);
-					}
-				}
-			}
-			int n=collected.Count;
-			for(int i=n/2-1;i>=0;i--)
-			{
-				HacerHeap(collected,n,i);
-			}
-			//Sacar y ordenar
-			for(int i=n-1;i>0;i--)
-			{
-				Dato aux = collected[0];
-				collected[0] = collected[i];
-				collected[i]=aux;
+                    for (int j = 0; j < collected.Count; j++)
+                    {
+                        if (collected[j].texto == palActual)
+                        {
+                            existePal = true;
+                            break;
+                        }
 
-				HacerHeap(collected,n,i);
-			}
+                    }
+                    if (existePal == false)
+                    {
+                        int cuantasHay = Repetidas(datos, palActual);
+                        Dato nuevaTarjeta = new Dato(cuantasHay, palActual);
+                        collected.Add(nuevaTarjeta);
+                    }
+                }
+                int n = collected.Count;
+                for (int i = n / 2 - 1; i >= 0; i--)
+                {
+                    HacerHeap(collected, n, i);
+                }
+                //Sacar y ordenar
+                for (int i = n - 1; i > 0; i--)
+                {
+                    Dato aux = collected[0];
+                    collected[0] = collected[i];
+                    collected[i] = aux;
+
+                    HacerHeap(collected, n, i);
+                }
+				c++;
+            }
+			
 			
             
         }
@@ -203,11 +228,11 @@ namespace tpfinal
 			int hijoIzq = 2 * i + 1;
 			int hijoDer=2 * i + 2;
 
-			if(hijoIzq>n && lista[hijoIzq].ocurrencia < lista[menor].ocurrencia)
+			if(hijoIzq<n && lista[hijoIzq].ocurrencia < lista[menor].ocurrencia)
 			{
 				menor = hijoIzq;
 			}
-			if(hijoDer>n && lista[hijoDer].ocurrencia < lista[menor].ocurrencia)
+			if(hijoDer<n && lista[hijoDer].ocurrencia < lista[menor].ocurrencia)
 			{
 				menor=hijoDer;
 			}

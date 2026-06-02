@@ -30,22 +30,28 @@ namespace tpfinal
  
         private void button1_Click_1(object sender, EventArgs e)
         {
-            
-            List<ListItem> lista = new List<ListItem>();
-            List<Dato> collected = new List<Dato>();
-
-            Backend.buscar(heapOp.Checked, ocurrencias, collected);
-
-            flowLayoutPanel1.Controls.Clear();
-            
-            foreach (var datoDistancia in collected)
+            try
             {
-                ListItem item = new ListItem();
-                item.Dato = datoDistancia;
-                item.Width = flowLayoutPanel1.Width - 25;
-                lista.Add(item);
-                flowLayoutPanel1.Controls.Add(item);
+                List<ListItem> lista = new List<ListItem>();
+                List<Dato> collected = new List<Dato>();
+
+                Backend.buscar(heapOp.Checked, ocurrencias, collected);
+
+                flowLayoutPanel1.Controls.Clear();
+
+                foreach (var datoDistancia in collected)
+                {
+                    ListItem item = new ListItem();
+                    item.Dato = datoDistancia;
+                    item.Width = flowLayoutPanel1.Width - 25;
+                    lista.Add(item);
+                    flowLayoutPanel1.Controls.Add(item);
+                }
             }
+            catch (Exception ex) { 
+                MessageBox.Show("Error: " + ex.StackTrace);
+            }
+            
            
 
         }
