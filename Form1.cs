@@ -49,7 +49,7 @@ namespace tpfinal
                 }
             }
             catch (Exception ex) { 
-                MessageBox.Show("Error: " + ex.StackTrace);
+                MessageBox.Show("Error: " + ex.Message);
             }
             
            

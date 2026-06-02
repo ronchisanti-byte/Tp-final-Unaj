@@ -177,47 +177,45 @@ namespace tpfinal
 
         public void BuscarConHeap(List<string> datos, int cantidad, List<Dato> collected)
         {
-		
-                for (int i = 0; i < datos.Count; i++)
+				List<Dato> lista = new List<Dato>();//lista pque tiene elmentos tipo dato en base a la lista string llamada datos
+				List<Dato> heap = new List<Dato>(); ;
+				for (int i = 0; i < datos.Count; i++)
                 {
-                    string palActual = datos[i];
-                    bool existePal = false;
+					if (heap.Count < cantidad)
+					{
+						heap.Add(lista[i]);
+						buildminhip(heap);
 
-                    for (int j = 0; j < collected.Count; j++)
-                    {
-                        if (collected[j].texto == palActual)
-                        {
-                            existePal = true;
-                            break;
-                        }
+					}
+					else {
 
-                    }
-                    if (existePal == false)
-                    {
-                        int cuantasHay = Repetidas(datos, palActual);
-                        Dato nuevaTarjeta = new Dato(cuantasHay, palActual);
-                        collected.Add(nuevaTarjeta);
-                    }
-                }
-                int n = collected.Count;
-                for (int i = n / 2 - 1; i >= 0; i--)
-                {
-                    HacerHeap(collected, n, i);
-                }
-                //Sacar y ordenar
-                for (int i = n - 1; i > 0; i--)
-                {
-                    Dato aux = collected[0];
-                    collected[0] = collected[i];
-                    collected[i] = aux;
+						if (lista[i].ocurrencia > heap[0].ocurrencia)
+						{
+							heap[0] = lista[i];
+							buildminhip(heap);
+						}
 
-                    HacerHeap(collected, n, i);
-                }
 				
-			
-			
+					}
+
+                }
+
+			for (int i = 0; i < heap.Count; i++)
+			{
+				collected.Add(heap[i]);
+            }
+
             
         }
+        private void buildminhip(List<Dato> heap)
+		{
+			int n= heap.Count;
+			for (int i=n/2-1; i>=0; i--)
+			{
+				HacerHeap(heap,n,i);
+
+            }
+		}
 		//mi herramienta para despues hacerheap
 		private void HacerHeap(List<Dato>lista,int n,int i)
 		{
@@ -238,7 +236,7 @@ namespace tpfinal
 				Dato aux = lista[i];
 				lista[i] = lista[menor];
 				lista[menor] = aux;
-				HacerHeap(lista,n,i);
+				HacerHeap(lista,n,menor);
 			}
 		}
 
