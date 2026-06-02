@@ -177,9 +177,7 @@ namespace tpfinal
 
         public void BuscarConHeap(List<string> datos, int cantidad, List<Dato> collected)
         {
-			int c = 0;
-			while (c<cantidad)
-			{
+		
                 for (int i = 0; i < datos.Count; i++)
                 {
                     string palActual = datos[i];
@@ -215,8 +213,7 @@ namespace tpfinal
 
                     HacerHeap(collected, n, i);
                 }
-				c++;
-            }
+				
 			
 			
             
